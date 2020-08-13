@@ -1,0 +1,9 @@
+/.git
+/.idea
+/.docker
+/vendor
+/composer.lock
+.dockerignore
+docker-compose.yml
+.phpunit.result.cache
+phpunit.xml.bak

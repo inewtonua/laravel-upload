@@ -1,0 +1,40 @@
+{
+    "name": "inewtonua/laravel-upload",
+    "description": "Laravel file upload package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dmitriy Koval",
+            "email": "mirelcom@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.3",
+        "intervention/image": "^2.5"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.0@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Inewtonua\\Upload\\" : "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Inewtonua\\Upload\\Tests\\" : "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Inewtonua\\Upload\\UploadServiceProvider"
+            ],
+            "aliases": {
+                "upload": "Inewtonua\\Upload\\Facades\\Upload"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
