@@ -80,8 +80,8 @@ class UploadController extends Controller
 
         $parentModelName = $this->normalizeModelName($request->parent_model_name);
 
-        if($parentModelName == 'App\Models\Service\Service\Type')
-            $parentModelName = 'App\Models\Service\ServiceType';
+//        if($parentModelName == 'App\Models\Service\Service\Type')
+//            $parentModelName = 'App\Models\Service\ServiceType';
 
         if (!method_exists($parentModelName, 'uploadableConfig')) {
 
@@ -125,8 +125,10 @@ class UploadController extends Controller
 
         }
 
-
         /** --------------------------------------------------------------------- **/
+
+
+
 
         $upload = $this->upload->setParams(
             Auth::user()->id,

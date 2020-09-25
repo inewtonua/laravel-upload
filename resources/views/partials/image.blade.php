@@ -1,9 +1,14 @@
+@php
+    $uploads = $model->uploads->filter(function ($image, $key) use ($entity) {
+        return $image->uploadable_entity == $entity && $image->status == 1 && $image->deleted == 0;
+    });
+@endphp
 
 
 <div class="image-field">
     <div class="image-field-box">
         <span id="user_image" title="@lang('Replace image')">
-            <img src="{{ $model->attachments[$entity]->isNotEmpty() ? $model->attachments[$entity]->last()->getStyle('image') : '/storage/user-default.png' }}" alt="">
+            <img src="{{ $uploads ? $uploads->last()->getStyle('image') : '/storage/user-default.png' }}" alt="">
         </span>
     </div>
 </div>
@@ -58,8 +63,8 @@
 
             let model_name = "{!! Illuminate\Support\Str::snake(get_class($model)) !!}";
             let model_id = '{{ $model->id }}';
-            let has_image = '{{ $model->attachments[$entity]->first() ? true : false }}';
-            let image_id = '{{ $model->attachments[$entity]->first()->id ?? null }}';
+            let has_image = '{{ $uploads->first() ? true : false }}';
+            let image_id = '{{ $uploads->first()->id ?? null }}';
             let default_image = "/storage/user-default.png";
 
             $('#load_user_image').on('click', function (e) {

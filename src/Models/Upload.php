@@ -216,21 +216,6 @@ class Upload extends Model implements UploadModelContract
 //    }
 
     /**
-     * Возвращает название файла для ссылки
-     * @return string
-     */
-    public function getTitleAttribute() : string
-    {
-        return $this->meta['title'] ?? '';
-    }
-
-    public function getAltAttribute() : string
-    {
-        return $this->meta['alt'] ?? $this->original_name;
-    }
-
-
-    /**
      * Путь к файлу заданого стиля
      * @param $style
      * @return string|null
@@ -271,9 +256,15 @@ class Upload extends Model implements UploadModelContract
 
     }
 
-    public function makeStyles(){
+    public function makeStyles()
+    {
 
-        $config = $this->uploadable->uploadableConfig();
+        if ($this->uploadable) {
+            $config = $this->uploadable->uploadableConfig();
+        } else {
+            $config = (new $this->uploadable_type)->uploadableConfig();
+        }
+
 
         $stylesPaths = [];
 
@@ -354,6 +345,24 @@ class Upload extends Model implements UploadModelContract
         }
 
         return false;
+    }
+
+    /**
+     * Title
+     * @return string
+     */
+    public function getTitleAttribute()
+    {
+        return $this->meta['title'] ?? '';
+    }
+
+    /**
+     * Alt
+     * @return string
+     */
+    public function getAltAttribute()
+    {
+        return $this->meta['alt'] ?? null;
     }
 
     /*

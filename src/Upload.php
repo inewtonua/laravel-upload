@@ -39,7 +39,7 @@ class Upload implements UploadContract
         $this->uploadModel = $uploadModel;
     }
 
-    public function setParams(int $userId, string $parentModelName, string $parentModelEntity, $parentModelId, array $config )
+    public function setParams(int $userId, string $parentModelName, string $parentModelEntity, $parentModelId ) //, array $config
     {
 
         $this->userId = $userId;
@@ -53,6 +53,7 @@ class Upload implements UploadContract
 //        $this->config = $config;
 //        $this->stylesConfig = $config['styles'] ?? null;
 
+     //   \Debugbar::info($this);
         return $this;
     }
 
@@ -70,7 +71,9 @@ class Upload implements UploadContract
     {
 
         $this->fileOriginalName = $file->getClientOriginalName();
-        $this->fileMime = $file->getClientMimeType();
+        $this->fileMime = $file->getMimeType();
+
+      //  \Debugbar::info($file->getClientMimeType());
 
         // Обработка и запись файлов на диск
 

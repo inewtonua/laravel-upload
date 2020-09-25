@@ -53,7 +53,7 @@ class RemoveTemporaryFiles extends Command
 
         $models = UploadModel::where('status', 0)
             ->where('created_at', '<=', Carbon::now()->addMinutes(-1)->toDateTimeString())
-            ->take(25)
+            ->take(100)
             ->get();
 
         $x = $y = 0;

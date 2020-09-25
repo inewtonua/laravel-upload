@@ -1,7 +1,10 @@
 @php
     $max = $model::uploadableConfig()[$entity]['max'] ?? 100;
     $mode = $model::uploadableConfig()[$entity]['mode'] ?? 'simple';
-    $count = $model->attachments[$entity]->count();
+    $uploads = $model->uploads->filter(function ($image, $key) use ($entity) {
+       return $image->uploadable_entity == $entity && $image->status == 1 && $image->deleted == 0;
+    });
+    $count = $uploads->count();
 @endphp
 
 <div id="{{$entity}}" class="form-group clearfix">
@@ -18,7 +21,7 @@
 
         @if($model->exists && $count)
 
-            @foreach($model->attachments[$entity] as $upload)
+            @foreach($uploads as $upload)
 
                 <div class="file-box has-background-white file-{{$upload->id}} border is-clearfix" data-id="{{$upload->id}}">
 
@@ -120,7 +123,6 @@
 
             let model_name = "{!! Illuminate\Support\Str::snake(get_class($model)) !!}";
             let model_id = '{{$model->id ?? ''}}';
-
 
             let Spinner = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
 

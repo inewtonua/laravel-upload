@@ -53,47 +53,47 @@ trait Uploadable
     /*
      *  Разбиваем массив с загрузками на типы загрузок
      */
-    public function initializeAppendAttributeTrait()
-    {
-        $this->append('attachments');
-    }
-
-    public function getAttachmentsAttribute()
-    {
-        $attachments = [];
-
-        $entities = array_keys($this->uploadableConfig());
-
-        foreach ($entities as $entity) {
-
-            $attachments[$entity] = $this->uploads->filter(function ($value, $key) use ($entity) {
-
-                return $value->uploadable_entity == $entity && $value->status == 1 && $value->deleted == 0;
-
-            });
-
-        }
-
-        return $attachments;
-    }
+//    public function initializeAppendAttributeTrait()
+//    {
+//        $this->append('attachments');
+//    }
 
     /**
-     * Удаление файлов
+     * Добавляет к модели атрибут с массивом всех прикрепленных файлов
+     *
+     * @return array
      */
+
+//    public function getAttachmentsAttribute()
+//    {
+//        $attachments = [];
+//
+//        $entities = array_keys($this->uploadableConfig());
+//
+//        foreach ($entities as $entity) {
+//
+//            $attachments[$entity] = $this->uploads->filter(function ($value, $key) use ($entity) {
+//
+//                return $value->uploadable_entity == $entity && $value->status == 1 && $value->deleted == 0;
+//
+//            });
+//
+//        }
+//
+//        return $attachments;
+//    }
+
     protected static function bootUploadable()
     {
+        /**
+         * Deleting Model-Associated Files
+         */
         static::deleting(function ($model) {
-
             if ($model->uploads) {
-
                 foreach ($model->uploads as $key => $upload) {
-
                     $upload->markDeleted();
-
                 }
-
             }
-
         });
     }
 
