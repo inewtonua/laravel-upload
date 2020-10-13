@@ -74,7 +74,7 @@ class UploadServiceProvider extends ServiceProvider
          */
         $this->app->booted(function () {
             $schedule = $this->app->make(Schedule::class);
-            $schedule->command('upload:remove')->everyFiveMinutes();
+            $schedule->command('upload:remove')->everyThirtyMinutes();
         });
 
     }

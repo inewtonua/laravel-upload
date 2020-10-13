@@ -192,7 +192,7 @@ class Upload extends Model implements UploadModelContract
         if(!empty($this->styles)) {
             foreach ($this->styles as $style => $path) {
                 if( ! \Storage::disk('public')->delete($path) ) {
-                    \Log::error('Не удалось удалить файл ' . \Storage::disk('public')->path($path) .' для модели '.$model->id.'.');
+                    \Log::error('Не удалось удалить файл ' . \Storage::disk('public')->path($path) .' для модели '.$this->id.'.');
                 }
             }
         }
@@ -265,14 +265,13 @@ class Upload extends Model implements UploadModelContract
             $config = (new $this->uploadable_type)->uploadableConfig();
         }
 
-
         $stylesPaths = [];
 
         $this->removeStyleFiles();
 
         if(isset($config[$this->uploadable_entity])) {
 
-            $entity = $this->uploadable_entity;
+            //$entity = $this->uploadable_entity;
 
             if(isset($config[$this->uploadable_entity]['styles']) && !empty($config[$this->uploadable_entity]['styles'])) {
 
@@ -306,27 +305,19 @@ class Upload extends Model implements UploadModelContract
         if($image){
 
             if(!empty($styleOptions['operation'])) {
-
                 foreach ($styleOptions['operation'] as $operation => $value) {
-
                     if(!isset($value['aspectRatio']) or $value['aspectRatio']){
-
                         $image->$operation($value['width'] ?? null, $value['height'] ?? null, function ($constraint) {
                             $constraint->aspectRatio();
                             $constraint->upsize();
                         });
-
                     } else {
-
                         $image->$operation($value['width'] ?? null, $value['height'] ?? null, function ($constraint) {
 //                          $constraint->aspectRatio();
                             $constraint->upsize();
                         });
-
                     }
-
                 }
-
             }
 
             $fileExtension = $styleOptions['format'] ?? $image->extension;
@@ -338,7 +329,7 @@ class Upload extends Model implements UploadModelContract
             if(\Storage::disk('public')->put($savePath, $image)) {
                 return $savePath;
             } else {
-                \Log::error('Can\'t save image file.', [ $storePath.'/'.$this->fileName]);
+                \Log::error('Can\'t save image file.', [ $savePath ]);
                 return false;
             }
 
