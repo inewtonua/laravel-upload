@@ -36,18 +36,21 @@
             <div class="field is-grouped">
 
                 <div class="control" style="width: 75px">
-                    <input value="{{ request()->get('id') ?? '' }}" name="id" placeholder="№" type="text" class="input" id="inputNo">
+                    <input value="{{ request()->get('id') ?? '' }}" name="id" placeholder="№" type="text" class="input"
+                           id="inputNo">
                 </div>
 
                 <div class="control" style="width: 350px">
-                    <input value="{{ request()->get('title')??'' }}" name="title" placeholder="@lang('Title contains')" type="text" class="input">
+                    <input value="{{ request()->get('title')??'' }}" name="title" placeholder="@lang('Title contains')"
+                           type="text" class="input">
                 </div>
 
                 <div class="control">
                     <div class="select is-fullwidth">
                         <select id="published" name="published">
                             <option value="">@lang('Status') (@lang('all'))</option>
-                            <option value="0" @if (request()->get('published') == 0 && !is_null(request()->get('published'))) selected="" @endif>
+                            <option value="0"
+                                    @if (request()->get('published') == 0 && !is_null(request()->get('published'))) selected="" @endif>
                                 Не опубликовано
                             </option>
                             <option value="1" @if (request()->get('published') == 1) selected="" @endif>
@@ -116,13 +119,13 @@
                     {{--<a href="{{route('profile.index', $file->user->id )}}" target="_blank">{{ $file->user->name }}</a>--}}
                 </td>
                 <td class="text-center">
-                                <span style="white-space: nowrap">
-                                    @if(is_array($file->styles))
-                                        {{ implode(', ', array_keys($file->styles)) }}
-                                    @else
-                                        Нет
-                                    @endif
-                                </span>
+                    <span style="white-space: nowrap">
+                        @if(is_array($file->styles))
+                            {{ implode(', ', array_keys($file->styles)) }}
+                        @else
+                            Нет
+                        @endif
+                    </span>
                 </td>
                 {{--<td class="text-center">--}}
                 {{--@if(is_array($file->meta))--}}
@@ -185,23 +188,19 @@
 
         </tbody>
 
+        @if( $models->hasPages())
+            <tfoot>
+            <tr>
+                <td colspan="10">
+                    <br>
+                    {{ $models->appends(request()->query())->links('vendor.pagination.bulma') }}
+                </td>
+            </tr>
+            </tfoot>
+        @endif
+
     </table>
 
-    {{--@if( $models->hasPages() )--}}
-    {{--<tfoot>--}}
-    {{--<tr>--}}
-    {{--<td colspan="8">--}}
-    {{--<ul class="pagination pull-right">--}}
-    {{--{{ $models->links() }}--}}
-    {{--</ul>--}}
-    {{--</td>--}}
-    {{--</tr>--}}
-    {{--</tfoot>--}}
-    {{--@endif--}}
-
-    </div>
-
-    </div>
 
     {{--@push('scripts')--}}
 
